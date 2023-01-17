@@ -3,6 +3,7 @@ export interface ITodoList {
   handleClick: () => void;
 }
 
-export interface ITodoDetail {
+export interface ITodoReturn {
   getData: () => void;
+  deleteData: (id: string) => void;
 }
