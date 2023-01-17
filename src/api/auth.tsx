@@ -1,5 +1,4 @@
 import { IUserInfo } from "../types/auth";
-import { ITodos } from "../types/todo";
 import API from "./../utiis/API";
 
 const AuthAPI = {
