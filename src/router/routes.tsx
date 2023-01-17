@@ -4,7 +4,7 @@ const Todos = loadable(() => import("../pages/todo/index"));
 
 const routes = [
   // { id: 0, path: "/home", title: "todo", comp: <Home /> },
-  { id: 1, path: "/todolist", title: "todo", comp: <Todos /> },
+  { id: 1, path: "/todolist", title: "todo", item: <Todos /> },
 ];
 
 export default routes;
