@@ -1,26 +1,36 @@
-import { Box, Button, useDisclosure } from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { Container, List } from "./style/todoStyle";
-import { ITodoDetail, ITodoList } from "./types";
-import { ITodos, ITodoData } from "./../../types/todo";
+import { ITodoReturn, ITodoList } from "./types";
+import { ITodos, ITodoArr } from "./../../types/todo";
 import { useEffect, useState } from "react";
 import TodoAPI from "../../api/todo";
 import { IModal } from "../../main/components/Modal";
 import { success, Toast, error } from "./../../utiis/toast";
+import moment from "moment";
+import useInput from "./../../hook/useInput";
+import { Media768 } from "../../utiis/Media";
 
 const Todos = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [list, setList] = useState<ITodoData>({
-    title: "",
-    content: "",
-    id: "",
-    updatedAt: "",
-    createdAt: "",
-  });
+
   const [value, setValue] = useState<ITodos>({
     title: "",
     content: "",
   });
+  const [state, handler, setState] = useInput();
+  const [list, setList] = useState<ITodoArr>([
+    {
+      title: "",
+      content: "",
+      id: "",
+      updatedAt: "",
+      createdAt: "",
+    },
+  ]);
+
+  const [modalStatus, setModalStatus] = useState<boolean>(false);
+  const [dataid, setDataId] = useState<string>("");
 
   const toDoEvent: ITodoList = {
     handleChange: (e, type) => {
@@ -30,7 +40,6 @@ const Todos = () => {
         [type]: e.target.value,
       }));
     },
-
     handleClick: async () => {
       await TodoAPI.createToDo(value)
         .then((res) => {
@@ -45,46 +54,89 @@ const Todos = () => {
     },
   };
 
-  const getDetail: ITodoDetail = {
+  const todoAPI: ITodoReturn = {
     getData: async () => {
       await TodoAPI.getToDo()
         .then((res) => {
-          console.log(res.data);
           setList(res.data.data);
         })
         .catch((err) => {
           console.log(err.response.data);
         });
     },
+    deleteData: async () => {
+      await TodoAPI.deleteTodo(dataid)
+        .then((res) => {
+          console.log(res.data.data);
+          success("삭제되었습니다");
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+      onClose();
+    },
   };
-  console.log(list);
+
+  const openModal = (btn: string) => {
+    if (btn === "delete") setModalStatus(true);
+    else setModalStatus(false);
+    onOpen();
+  };
 
   useEffect(() => {
-    getDetail.getData();
-  }, []);
+    todoAPI.getData();
+  }, [isOpen]);
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   return (
     <>
-      <Box p="20px 40px">
-        <Box p="20px" border=" 1px solid #d1d1d1" borderRadius="5px">
+      <Box p={Media768() ? "20px 20px" : "20px 40px"}>
+        <input
+          type="text"
+          onChange={(e) => {
+            handler(e, "title");
+          }}
+        />
+        <Box border=" 1px solid #d1d1d1" borderRadius="5px">
           <Container>
             <ul>
-              <li>
-                <List>
-                  <Link to="">
-                    <p>제목</p>
-                    <p>내용</p>
-                    <p>작성일</p>
-                  </Link>
-
-                  <button>삭제</button>
-                </List>
-              </li>
+              {list.map((c) => {
+                const createdate = moment(c.createdAt).format("YYYY.MM.DD");
+                return (
+                  <li key={c.id}>
+                    <List>
+                      <Link to={`/todolist/${c.id}`}>
+                        <p>{c.content}</p>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          setDataId(c.id);
+                          openModal("delete");
+                        }}
+                      >
+                        삭제
+                      </button>
+                    </List>
+                  </li>
+                );
+              })}
             </ul>
           </Container>
 
           <Box display="flex">
-            <IModal title={"TodoAdd"} isOpen={isOpen} onOpen={onOpen} onClose={onClose} change={toDoEvent.handleChange} action={toDoEvent.handleClick} value={value} />
+            <IModal
+              title={modalStatus ? "삭제" : "추가"}
+              isOpen={isOpen}
+              onOpen={openModal}
+              onClose={onClose}
+              change={toDoEvent.handleChange}
+              action={modalStatus ? todoAPI.deleteData : toDoEvent.handleClick}
+              value={value}
+              modalStatus={modalStatus}
+            />
           </Box>
         </Box>
       </Box>
