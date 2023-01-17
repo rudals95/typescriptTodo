@@ -1,3 +1,5 @@
+import { ITodoPut } from "../../types/todo";
+
 export interface ITodoList {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>, type: string) => void;
   handleClick: () => void;
@@ -10,4 +12,5 @@ export interface ITodoReturn {
 
 export interface ITodoDetail {
   getDetail: (id: string | undefined) => void;
+  updateData: (id: string | undefined, num: string) => void;
 }

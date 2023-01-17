@@ -1,4 +1,4 @@
-import { ITodos } from "../types/todo";
+import { ITodoPut, ITodos } from "../types/todo";
 import API from "./../utiis/API";
 
 const TodoAPI = {
@@ -13,6 +13,13 @@ const TodoAPI = {
   },
   detailTodo: (id: string | undefined) => {
     return API.get(`/todos/${id}`);
+  },
+
+  // updateTodo: ({ id, data }: ITodoPut) => {
+  //   return API.put(`/todos/${id}`, data);
+  // },
+  updateTodo: (id: string | undefined, num: string) => {
+    return API.put(`/todos/${id}`, num);
   },
 };
 

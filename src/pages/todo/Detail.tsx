@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { ITodoDetail } from "./types";
 import TodoAPI from "../../api/todo";
 import { useEffect, useState } from "react";
-import { ITodoData } from "../../types/todo";
+import { ITodoData, ITodoPut } from "../../types/todo";
 import moment from "moment/moment";
 import { FiEdit } from "react-icons/fi";
 import { FcCancel } from "react-icons/fc";
@@ -22,7 +22,7 @@ const Detail = () => {
     updatedAt: "",
     createdAt: "",
   });
-
+  const num: number = 1;
   const detailData: ITodoDetail = {
     getDetail: (id) => {
       TodoAPI.detailTodo(id).then((res) => {
@@ -31,6 +31,11 @@ const Detail = () => {
           ...res.data.data,
           createdAt: moment(res.data.data).format("YYYY-MM-DD"),
         }));
+      });
+    },
+    updateData: (id: string | undefined, num: string) => {
+      TodoAPI.updateTodo(id, num).then((res) => {
+        console.log(res.data);
       });
     },
   };
@@ -85,6 +90,9 @@ const Detail = () => {
                 }}
               />
               <BsCheckCircle
+                onClick={() => {
+                  detailData.updateData(id, "title");
+                }}
                 style={{
                   marginLeft: "20px",
                 }}

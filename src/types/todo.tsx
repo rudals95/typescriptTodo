@@ -10,3 +10,9 @@ export interface ITodoData extends ITodos {
 }
 
 export interface ITodoArr extends Array<ITodoData> {}
+
+export interface ITodoPut {
+  // id: string;
+  // data: ITodos;
+  number: string;
+}
