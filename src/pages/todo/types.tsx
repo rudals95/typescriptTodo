@@ -7,3 +7,7 @@ export interface ITodoReturn {
   getData: () => void;
   deleteData: (id: string) => void;
 }
+
+export interface ITodoDetail {
+  getDetail: (id: string | undefined) => void;
+}

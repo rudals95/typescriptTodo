@@ -11,6 +11,9 @@ const TodoAPI = {
   deleteTodo: (id: string) => {
     return API.delete(`/todos/${id}`);
   },
+  detailTodo: (id: string | undefined) => {
+    return API.get(`/todos/${id}`);
+  },
 };
 
 export default TodoAPI;
