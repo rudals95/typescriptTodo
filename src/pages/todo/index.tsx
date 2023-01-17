@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import TodoAPI from "../../api/todo";
 import { IModal } from "../../main/components/Modal";
 import { success, Toast, error } from "./../../utiis/toast";
-import moment from "moment";
 import useInput from "./../../hook/useInput";
 import { Media768 } from "../../utiis/Media";
 
@@ -67,7 +66,6 @@ const Todos = () => {
     deleteData: async () => {
       await TodoAPI.deleteTodo(dataid)
         .then((res) => {
-          console.log(res.data.data);
           success("삭제되었습니다");
         })
         .catch((err) => {
@@ -94,17 +92,11 @@ const Todos = () => {
   return (
     <>
       <Box p={Media768() ? "20px 20px" : "20px 40px"}>
-        <input
-          type="text"
-          onChange={(e) => {
-            handler(e, "title");
-          }}
-        />
         <Box border=" 1px solid #d1d1d1" borderRadius="5px">
           <Container>
             <ul>
               {list.map((c) => {
-                const createdate = moment(c.createdAt).format("YYYY.MM.DD");
+                // const createdate = moment(c.createdAt).format("YYYY.MM.DD");
                 return (
                   <li key={c.id}>
                     <List>
