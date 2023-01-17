@@ -14,3 +14,22 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+@font-face {
+  font-family: "bsfont-r";
+  font-size: 16px;
+  src: url("assets/휴먼범석체.ttf");
+}
+
+@font-face {
+  font-family: "bsfont-l";
+  font-size: 20px;
+  font-weight: 400;
+  src: url("assets/휴먼범석체.ttf");
+}
+
+@font-face {
+  font-family: "bsfont-xl";
+  font-size: 24px;
+  src: url("assets/휴먼범석체.ttf");
+}
