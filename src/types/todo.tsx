@@ -8,3 +8,5 @@ export interface ITodoData extends ITodos {
   updatedAt: string;
   createdAt: string;
 }
+
+export interface ITodoArr extends Array<ITodoData> {}
