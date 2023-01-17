@@ -10,7 +10,7 @@ const Main = () => {
       <Routes>
         <Route path="/" element={<Contents />}>
           {routes.map((c) => {
-            return <Route key={c.id} path={c.path} element={c.comp} />;
+            return <Route key={c.id} path={c.path} element={c.item} />;
           })}
         </Route>
       </Routes>
