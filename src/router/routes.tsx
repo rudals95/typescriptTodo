@@ -1,10 +1,10 @@
 import loadable from "@loadable/component";
-// const Home = loadable(() => import("../pages/home/index"));
 const Todos = loadable(() => import("../pages/todo/index"));
+const Detail = loadable(() => import("../pages/todo/Detail"));
 
 const routes = [
-  // { id: 0, path: "/home", title: "todo", comp: <Home /> },
-  { id: 1, path: "/todolist", title: "todo", item: <Todos /> },
+  { id: 0, path: "/todolist", title: "todo", item: <Todos /> },
+  { id: 1, path: "/todolist/:id", title: "Detail", item: <Detail /> },
 ];
 
 export default routes;
