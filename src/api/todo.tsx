@@ -1,4 +1,4 @@
-import { ITodos, ITodoData } from "../types/todo";
+import { ITodos } from "../types/todo";
 import API from "./../utiis/API";
 
 const TodoAPI = {
@@ -7,6 +7,9 @@ const TodoAPI = {
   },
   getToDo: () => {
     return API.get(`todos`);
+  },
+  deleteTodo: (id: string) => {
+    return API.delete(`/todos/${id}`);
   },
 };
 
