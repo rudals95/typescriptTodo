@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import TodoAPI from "../../api/todo";
 import { IModal } from "../../main/components/Modal";
 import { success, Toast, error } from "./../../utiis/toast";
-import useInput from "./../../hook/useInput";
 import { Media768 } from "../../utiis/Media";
 
 const Todos = () => {
@@ -17,7 +16,7 @@ const Todos = () => {
     title: "",
     content: "",
   });
-  const [state, handler, setState] = useInput();
+
   const [list, setList] = useState<ITodoArr>([
     {
       title: "",
@@ -85,10 +84,6 @@ const Todos = () => {
     todoAPI.getData();
   }, [isOpen]);
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
-
   return (
     <>
       <Box p={Media768() ? "20px 20px" : "20px 40px"}>
@@ -96,7 +91,6 @@ const Todos = () => {
           <Container>
             <ul>
               {list.map((c) => {
-                // const createdate = moment(c.createdAt).format("YYYY.MM.DD");
                 return (
                   <li key={c.id}>
                     <List>

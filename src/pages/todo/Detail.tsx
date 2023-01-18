@@ -5,24 +5,25 @@ import { useParams } from "react-router-dom";
 import { ITodoDetail } from "./types";
 import TodoAPI from "../../api/todo";
 import { useEffect, useState } from "react";
-import { ITodoData, ITodoPut } from "../../types/todo";
+import { ITodoData, ITodos } from "../../types/todo";
 import moment from "moment/moment";
 import { FiEdit } from "react-icons/fi";
 import { FcCancel } from "react-icons/fc";
 import { BsCheckCircle } from "react-icons/bs";
+import { success, Toast } from "./../../utiis/toast";
 
 const Detail = () => {
   const { id } = useParams();
   const [editSwitch, setEditSwitch] = useState<boolean>(true);
 
-  const [data, setData] = useState<ITodoData>({
+  const [data, setData] = useState<ITodoData | ITodos>({
     title: "",
     content: "",
     id: "",
     updatedAt: "",
     createdAt: "",
   });
-  const num: number = 1;
+
   const detailData: ITodoDetail = {
     getDetail: (id) => {
       TodoAPI.detailTodo(id).then((res) => {
@@ -33,15 +34,27 @@ const Detail = () => {
         }));
       });
     },
-    updateData: (id: string | undefined, num: string) => {
-      TodoAPI.updateTodo(id, num).then((res) => {
-        console.log(res.data);
-      });
+    updateData: (id, data) => {
+      TodoAPI.updateTodo(id, data)
+        .then((res) => {
+          console.log(res.data);
+          success("수정되었습니다");
+          setEditSwitch(true);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
+    handleChange: (e, type) => {
+      setData((state) => ({
+        ...state,
+        [type]: e.target.value,
+      }));
     },
   };
   useEffect(() => {
     detailData.getDetail(id);
-  }, []);
+  }, [editSwitch]);
 
   return (
     <Box p={Media768() ? "20px 20px" : "20px 40px"}>
@@ -60,11 +73,25 @@ const Detail = () => {
             <>
               <Box display="flex" alignItems="center" mb="10px" pb="10px" borderBottom="1px solid #ddd">
                 <p>제목:</p>
-                <Input ml="10px" w="auto" value={data.title} readOnly />
+                <Input
+                  ml="10px"
+                  w="auto"
+                  value={data.title}
+                  onChange={(e) => {
+                    detailData.handleChange(e, "title");
+                  }}
+                />
               </Box>
               <Box display="flex" alignItems="center" mb="10px" pb="10px" borderBottom="1px solid #ddd">
                 <p>내용: </p>
-                <Input ml="10px" w="auto" value={data.content} readOnly />
+                <Input
+                  ml="10px"
+                  w="auto"
+                  value={data.content}
+                  onChange={(e) => {
+                    detailData.handleChange(e, "content");
+                  }}
+                />
               </Box>
             </>
           )}
@@ -91,7 +118,7 @@ const Detail = () => {
               />
               <BsCheckCircle
                 onClick={() => {
-                  detailData.updateData(id, "title");
+                  detailData.updateData(id, { data });
                 }}
                 style={{
                   marginLeft: "20px",
@@ -114,6 +141,7 @@ const Detail = () => {
             /> */}
         </Box>
       </Box>
+      <Toast />
     </Box>
   );
 };
