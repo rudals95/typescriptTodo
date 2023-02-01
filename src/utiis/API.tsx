@@ -2,7 +2,7 @@ import axios from "axios";
 import { error } from "./toast";
 
 const API = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://localhost:8085/api",
   withCredentials: true,
 });
 

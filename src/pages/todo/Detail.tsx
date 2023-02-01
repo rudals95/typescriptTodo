@@ -19,7 +19,7 @@ const Detail = () => {
   const [data, setData] = useState<ITodoData | ITodos>({
     title: "",
     content: "",
-    id: "",
+    _id: "",
     updatedAt: "",
     createdAt: "",
   });

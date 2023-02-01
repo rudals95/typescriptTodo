@@ -1,4 +1,4 @@
-import { ITodoPutData, ITodos } from "../types/todo";
+import {  ITodoDeleteData, ITodoPutData, ITodos } from "../types/todo";
 import API from "./../utiis/API";
 
 const TodoAPI = {
@@ -6,10 +6,10 @@ const TodoAPI = {
     return API.post("/todos", data);
   },
   getToDo: () => {
-    return API.get(`todos`);
+    return API.get(`/todos`);
   },
-  deleteTodo: (id: string) => {
-    return API.delete(`/todos/${id}`);
+  deleteTodo: ({ seq }:ITodoDeleteData) => {
+    return API.post(`/todos/remove`,{seq});
   },
   detailTodo: (id: string | undefined) => {
     return API.get(`/todos/${id}`);
@@ -17,6 +17,11 @@ const TodoAPI = {
 
   updateTodo: (id: string | undefined, { data }: ITodoPutData) => {
     return API.put(`/todos/${id}`, data);
+  },
+
+  
+postTodo: (formData: any) => {
+    return API.post(`/todos/post`, formData, {});
   },
 };
 
