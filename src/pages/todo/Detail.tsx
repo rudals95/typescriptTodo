@@ -27,7 +27,6 @@ const Detail = () => {
   const detailData: ITodoDetail = {
     getDetail: (id) => {
       TodoAPI.detailTodo(id).then((res) => {
-        console.log(res.data.data);
         setData(() => ({
           ...res.data.data,
           createdAt: moment(res.data.data).format("YYYY-MM-DD"),
@@ -35,6 +34,12 @@ const Detail = () => {
       });
     },
     updateData: (id, data) => {
+      // setData((state) => ({
+      //   ...state,
+      //   createdAt: moment().format("YYYY-MM-DD"),
+      // }));
+      // console.log(data);
+
       TodoAPI.updateTodo(id, data)
         .then((res) => {
           console.log(res.data);

@@ -25,13 +25,13 @@ const Todos = () => {
       _id: "",
       updatedAt: "",
       createdAt: "",
-      seq:''
+      seq: "",
     },
   ]);
 
   const [modalStatus, setModalStatus] = useState<boolean>(false);
   const [dataid, setDataId] = useState<string>("");
-  
+
   interface FileData {
     lastModified: number;
     name: string;
@@ -41,23 +41,20 @@ const Todos = () => {
 
   const [file, setFile] = useState<any>();
 
-
-  const onSubmit:IPostForm={
-    handleChange:(e)=>{
+  const onSubmit: IPostForm = {
+    handleChange: (e) => {
       console.log(e.target.files);
-      
+
       if (e.target.files !== null) {
         setFile({ profileImg: e.target.files[0] });
       }
     },
-    handleSubmit:  (e) => {
-      e.preventDefault()
+    handleSubmit: (e) => {
+      e.preventDefault();
       const formData = new FormData();
       formData.append("profileImg", file.profileImg);
     },
-  }
-
-
+  };
 
   const toDoEvent: ITodoList = {
     handleChange: (e, type) => {
@@ -92,21 +89,20 @@ const Todos = () => {
         });
     },
     deleteData: async () => {
-   const data:ITodoDeleteData={
-      seq:dataid
-
-   }
+      const data: ITodoDeleteData = {
+        seq: dataid,
+      };
       await TodoAPI.deleteTodo(data)
         .then((res) => {
           console.log(res.data);
-          
+
           success("삭제되었습니다");
         })
         .catch((err) => {
           console.log(err.response.data);
         });
-        console.log(data,'sssss');
-        
+      console.log(data, "sssss");
+
       onClose();
     },
   };
@@ -128,8 +124,6 @@ const Todos = () => {
           <Container>
             <ul>
               {list.map((c) => {
-                console.log(c);
-                
                 return (
                   <li key={c._id}>
                     <List>
@@ -166,18 +160,21 @@ const Todos = () => {
         </Box>
       </Box>
       <Toast />
-      <form onSubmit={ onSubmit.handleSubmit}>
-          <div className="form-group">
-            <input type="file" onChange={(e)=>{
-              onSubmit.handleChange(e)
-            }} />
-          </div>
-          <div className="form-group">
-            <button className="btn btn-primary" type="submit">
-              Upload
-            </button>
-          </div>
-        </form>
+      <form onSubmit={onSubmit.handleSubmit}>
+        <div className="form-group">
+          <input
+            type="file"
+            onChange={(e) => {
+              onSubmit.handleChange(e);
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <button className="btn btn-primary" type="submit">
+            Upload
+          </button>
+        </div>
+      </form>
     </>
   );
 };

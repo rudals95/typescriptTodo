@@ -34,7 +34,7 @@ const Login = () => {
       await AuthAPI.login(value)
         .then((res): void => {
           console.log(res.data);
-          localStorage.setItem("user", res.data.token);
+          localStorage.setItem("token", res.data.data.token);
           success(res.data.message);
           navigate("/todolist");
         })

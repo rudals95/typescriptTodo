@@ -1,20 +1,26 @@
 import axios from "axios";
-import { error } from "./toast";
 
 const API = axios.create({
   baseURL: "http://localhost:8085/api",
+  headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
 
 API.interceptors.request.use(
-  (config) => {
+  async (config) => {
     const data = config;
-    const accessToken = localStorage.getItem("user");
+    const accessToken = localStorage.getItem("token");
 
-    data.headers = {
-      Authorization: `${accessToken}`,
-      Accept: "*/*",
-    };
+    if (!accessToken || accessToken === undefined) {
+      data.headers = { Accept: "*/*" }; //둘다 없을 경우
+    } else {
+      data.headers = {
+        Authorization: `${accessToken}`,
+        Accept: "*/*",
+        // "x-access-token": `${accessToken}`,
+      };
+    }
+
     return data;
   },
   (err) => {
