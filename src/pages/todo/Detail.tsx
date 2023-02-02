@@ -22,14 +22,16 @@ const Detail = () => {
     _id: "",
     updatedAt: "",
     createdAt: "",
+    img_URL: "",
   });
 
   const detailData: ITodoDetail = {
     getDetail: (id) => {
       TodoAPI.detailTodo(id).then((res) => {
         setData(() => ({
-          ...res.data.data,
-          createdAt: moment(res.data.data).format("YYYY-MM-DD"),
+          ...res.data.data[0],
+          createdAt: moment(res.data.data[0]).format("YYYY-MM-DD"),
+          img_URL: res.data.data[0].img_URL,
         }));
       });
     },
@@ -56,9 +58,19 @@ const Detail = () => {
         [type]: e.target.value,
       }));
     },
+    getDetail_Image: (id) => {
+      TodoAPI.getTodoImage(id).then((res) => {
+        console.log(res);
+      });
+      console.log("여기부터하면댐");
+    },
   };
   useEffect(() => {
     detailData.getDetail(id);
+    if (data.img_URL !== null) {
+      detailData.getDetail_Image(id);
+      return;
+    }
   }, [editSwitch]);
 
   return (
@@ -73,6 +85,10 @@ const Detail = () => {
               <div>
                 <p>내용: {data.content}</p>
               </div>
+              <Box border="1px solid #E2E8F0" p="20px" mb="10px">
+                이미지영역
+                {/* <img src={data.img_URL} alt="" /> */}
+              </Box>
             </>
           ) : (
             <>

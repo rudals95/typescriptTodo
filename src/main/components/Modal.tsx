@@ -10,9 +10,11 @@ type Props = {
   title: string;
   value: ITodos;
   modalStatus: boolean;
+  formAction: (e: any) => void;
+  fileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, change, action, onOpen, onClose }) => {
+export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, change, action, onOpen, onClose, formAction, fileChange }) => {
   return (
     <>
       <Button
@@ -32,6 +34,18 @@ export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, cha
             <ModalBody>삭제하시겠습니까?</ModalBody>
           ) : (
             <ModalBody>
+              <form onSubmit={formAction}>
+                <div className="form-group">
+                  <input type="file" onChange={fileChange} />
+                </div>
+                <img src="" alt="" />
+                <div className="form-group">
+                  <button className="btn btn-primary" type="submit">
+                    Upload
+                  </button>
+                </div>
+              </form>
+
               <Input
                 value={value.title}
                 onChange={(e) => {
@@ -54,7 +68,7 @@ export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, cha
             <Button
               colorScheme="blue"
               mr={3}
-              onClick={action}
+              onClick={formAction}
               // onClick={() => {
               //   action("delete");
               // }}

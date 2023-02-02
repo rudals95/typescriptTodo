@@ -14,4 +14,5 @@ export interface ITodoDetail {
   getDetail: (id: string | undefined) => void;
   updateData: (id: string | undefined, { data }: ITodoPutData) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>, type: string) => void;
+  getDetail_Image: (id: string | undefined) => void;
 }

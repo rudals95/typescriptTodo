@@ -8,11 +8,14 @@ import TodoAPI from "../../api/todo";
 import { IModal } from "../../main/components/Modal";
 import { success, Toast, error } from "./../../utiis/toast";
 import { Media768 } from "../../utiis/Media";
-import { IPostForm, IUserForm } from "../../auth/types";
+import { IPostForm } from "../../auth/types";
 
 const Todos = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [modalStatus, setModalStatus] = useState<boolean>(false);
 
+  const [dataid, setDataId] = useState<string>("");
+  const [file, setFile] = useState<any>();
   const [value, setValue] = useState<ITodos>({
     title: "",
     content: "",
@@ -29,36 +32,36 @@ const Todos = () => {
     },
   ]);
 
-  const [modalStatus, setModalStatus] = useState<boolean>(false);
-  const [dataid, setDataId] = useState<string>("");
-
-  interface FileData {
-    lastModified: number;
-    name: string;
-    size: number;
-    type: string;
-  }
-
-  const [file, setFile] = useState<any>();
-
   const onSubmit: IPostForm = {
     handleChange: (e) => {
-      console.log(e.target.files);
-
       if (e.target.files !== null) {
-        setFile({ profileImg: e.target.files[0] });
+        setFile({ img: e.target.files[0] });
       }
     },
-    handleSubmit: (e) => {
+    handleSubmit: async (e) => {
       e.preventDefault();
       const formData = new FormData();
-      formData.append("profileImg", file.profileImg);
+      if (file !== undefined) {
+        formData.append("img", file.img);
+      }
+
+      formData.append("title", value.title);
+      formData.append("content", value.content);
+
+      await TodoAPI.postTodo(formData)
+        .then((res) => {
+          console.log(res);
+          success("완료되었습니다");
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+      onClose();
     },
   };
 
   const toDoEvent: ITodoList = {
     handleChange: (e, type) => {
-      console.log(e.target.value);
       setValue((state) => ({
         ...state,
         [type]: e.target.value,
@@ -68,10 +71,8 @@ const Todos = () => {
       await TodoAPI.createToDo(value)
         .then((res) => {
           success("완료되었습니다");
-          console.log(res.data);
         })
         .catch((err) => {
-          console.log(err.response.data);
           error(err.response.data.details);
         });
       onClose();
@@ -84,9 +85,7 @@ const Todos = () => {
         .then((res) => {
           setList(res.data.data);
         })
-        .catch((err) => {
-          console.log(err.response.data);
-        });
+        .catch((err) => {});
     },
     deleteData: async () => {
       const data: ITodoDeleteData = {
@@ -94,15 +93,11 @@ const Todos = () => {
       };
       await TodoAPI.deleteTodo(data)
         .then((res) => {
-          console.log(res.data);
-
           success("삭제되었습니다");
         })
         .catch((err) => {
           console.log(err.response.data);
         });
-      console.log(data, "sssss");
-
       onClose();
     },
   };
@@ -155,26 +150,13 @@ const Todos = () => {
               action={modalStatus ? todoAPI.deleteData : toDoEvent.handleClick}
               value={value}
               modalStatus={modalStatus}
+              formAction={modalStatus ? todoAPI.deleteData : onSubmit.handleSubmit}
+              fileChange={onSubmit.handleChange}
             />
           </Box>
         </Box>
       </Box>
       <Toast />
-      <form onSubmit={onSubmit.handleSubmit}>
-        <div className="form-group">
-          <input
-            type="file"
-            onChange={(e) => {
-              onSubmit.handleChange(e);
-            }}
-          />
-        </div>
-        <div className="form-group">
-          <button className="btn btn-primary" type="submit">
-            Upload
-          </button>
-        </div>
-      </form>
     </>
   );
 };
