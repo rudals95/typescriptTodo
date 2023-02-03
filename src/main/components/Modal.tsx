@@ -34,18 +34,6 @@ export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, cha
             <ModalBody>삭제하시겠습니까?</ModalBody>
           ) : (
             <ModalBody>
-              <form onSubmit={formAction}>
-                <div className="form-group">
-                  <input type="file" onChange={fileChange} />
-                </div>
-                <img src="" alt="" />
-                <div className="form-group">
-                  <button className="btn btn-primary" type="submit">
-                    Upload
-                  </button>
-                </div>
-              </form>
-
               <Input
                 value={value.title}
                 onChange={(e) => {
