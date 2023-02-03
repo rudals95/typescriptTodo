@@ -72,10 +72,11 @@ const Detail = () => {
               <div>
                 <p>내용: {data.content}</p>
               </div>
-              <Box border="1px solid #E2E8F0" p="20px" mb="10px">
-                이미지영역
-                <img src={data.img_URL} alt="이미지" />
-              </Box>
+              {data.img_URL !== null && (
+                <Box border="1px solid #E2E8F0" p="20px" mb="10px">
+                  <img src={data.img_URL} alt="이미지" />
+                </Box>
+              )}
             </>
           ) : (
             <>
