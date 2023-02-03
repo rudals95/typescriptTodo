@@ -2,6 +2,7 @@ export interface ITodos {
   title: string;
   content: string;
   createdAt?: string;
+  updatedAt?: string;
   img_URL?: string;
 }
 export interface ITodosSeq {
@@ -10,7 +11,6 @@ export interface ITodosSeq {
 
 export interface ITodoData extends ITodos {
   _id: string;
-  updatedAt: string;
   seq: string;
 }
 

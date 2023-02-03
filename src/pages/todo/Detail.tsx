@@ -28,20 +28,17 @@ const Detail = () => {
   const detailData: ITodoDetail = {
     getDetail: (id) => {
       TodoAPI.detailTodo(id).then((res) => {
+        console.log(res.data.data[0], res.data.data[0].updatedAt === null);
+
         setData(() => ({
           ...res.data.data[0],
-          createdAt: moment(res.data.data[0]).format("YYYY-MM-DD"),
-          img_URL: res.data.data[0].img_URL,
+          createdAt: moment(res.data.data[0].createdAt).format("YYYY-MM-DD"),
+          updatedAt: res.data.data[0].updatedAt === null ? null : moment().format("YYYY-MM-DD"),
+          img_URL: res.data.data[0].img_URL === null || res.data.data[0].img_URL === undefined ? null : res.data.data[0].img_URL.replace("public/", ""),
         }));
       });
     },
     updateData: (id, data) => {
-      // setData((state) => ({
-      //   ...state,
-      //   createdAt: moment().format("YYYY-MM-DD"),
-      // }));
-      // console.log(data);
-
       TodoAPI.updateTodo(id, data)
         .then((res) => {
           console.log(res.data);
@@ -58,19 +55,9 @@ const Detail = () => {
         [type]: e.target.value,
       }));
     },
-    getDetail_Image: (id) => {
-      TodoAPI.getTodoImage(id).then((res) => {
-        console.log(res);
-      });
-      console.log("여기부터하면댐");
-    },
   };
   useEffect(() => {
     detailData.getDetail(id);
-    if (data.img_URL !== null) {
-      detailData.getDetail_Image(id);
-      return;
-    }
   }, [editSwitch]);
 
   return (
@@ -87,7 +74,7 @@ const Detail = () => {
               </div>
               <Box border="1px solid #E2E8F0" p="20px" mb="10px">
                 이미지영역
-                {/* <img src={data.img_URL} alt="" /> */}
+                <img src={data.img_URL} alt="이미지" />
               </Box>
             </>
           ) : (
@@ -119,6 +106,7 @@ const Detail = () => {
 
           <div>
             <p className="date">등록일: {data.createdAt}</p>
+            {data.updatedAt !== null && <p className="date">수정일: {data.updatedAt}</p>}
           </div>
         </DetailContainer>
         <Box mb="20px" display="flex" justifyContent={"center"} alignItems="center">
