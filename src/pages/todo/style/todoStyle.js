@@ -16,14 +16,18 @@ export const List = styled.div`
   b
   justify-content: space-between;
   & > a {
-    width: 90%;
+    width: 88%;
     display: flex;
   }
   & > a > p {
     padding-right: 10px;
+    width:100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   & > button {
-    width: 10%;
+    width: 12%;
   }
 `;
 
