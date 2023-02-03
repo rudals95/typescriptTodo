@@ -72,10 +72,10 @@ export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, cha
               //   action("delete");
               // }}
             >
-              Save
+              저장
             </Button>
             <Button colorScheme="red" onClick={onClose}>
-              Close
+              취소
             </Button>
           </ModalFooter>
         </ModalContent>

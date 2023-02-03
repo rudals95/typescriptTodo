@@ -44,14 +44,16 @@ const Todos = () => {
       if (file !== undefined) {
         formData.append("img", file.img);
       }
-
       formData.append("title", value.title);
       formData.append("content", value.content);
+      if (value.title === "") return error("제목을 입력하세요");
+      if (value.content === "") return error("내용을 입력하세요");
 
       await TodoAPI.postTodo(formData)
         .then((res) => {
           console.log(res);
           success("완료되었습니다");
+          setValue((state) => ({ ...state, title: "", content: "" }));
         })
         .catch((err) => {
           console.log(err.response);
@@ -112,9 +114,19 @@ const Todos = () => {
     todoAPI.getData();
   }, [isOpen]);
 
+  // mobile{
+  //   padding:20px 20px;
+  //   }
+
+  //   pc{
+  //     padding:20px 40px;
+  //     max-width:550px;
+  //     margin:0 a
+  //     }
+
   return (
     <>
-      <Box p={Media768() ? "20px 20px" : "20px 40px"}>
+      <Box p={Media768() ? "20px 20px" : "20px 40px"} maxWidth={Media768() ? "" : "550px"} m={Media768() ? "" : "0 auto"}>
         <Box border=" 1px solid #d1d1d1" borderRadius="5px">
           <Container>
             <ul>
