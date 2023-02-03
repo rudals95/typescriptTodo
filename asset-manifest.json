@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/typescriptTodo/static/css/main.77cd4b09.css",
+    "main.js": "/typescriptTodo/static/js/main.a8b0905b.js",
+    "static/js/579.4e4d3816.chunk.js": "/typescriptTodo/static/js/579.4e4d3816.chunk.js",
+    "static/js/566.92a6f705.chunk.js": "/typescriptTodo/static/js/566.92a6f705.chunk.js",
+    "static/js/422.252d322a.chunk.js": "/typescriptTodo/static/js/422.252d322a.chunk.js",
+    "static/js/79.ac6ee660.chunk.js": "/typescriptTodo/static/js/79.ac6ee660.chunk.js",
+    "static/js/782.a644972a.chunk.js": "/typescriptTodo/static/js/782.a644972a.chunk.js",
+    "static/media/휴먼범석체.ttf": "/typescriptTodo/static/media/휴먼범석체.359ba83f2c9722acb124.ttf",
+    "index.html": "/typescriptTodo/index.html",
+    "main.77cd4b09.css.map": "/typescriptTodo/static/css/main.77cd4b09.css.map",
+    "main.a8b0905b.js.map": "/typescriptTodo/static/js/main.a8b0905b.js.map",
+    "579.4e4d3816.chunk.js.map": "/typescriptTodo/static/js/579.4e4d3816.chunk.js.map",
+    "566.92a6f705.chunk.js.map": "/typescriptTodo/static/js/566.92a6f705.chunk.js.map",
+    "422.252d322a.chunk.js.map": "/typescriptTodo/static/js/422.252d322a.chunk.js.map",
+    "79.ac6ee660.chunk.js.map": "/typescriptTodo/static/js/79.ac6ee660.chunk.js.map",
+    "782.a644972a.chunk.js.map": "/typescriptTodo/static/js/782.a644972a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.77cd4b09.css",
+    "static/js/main.a8b0905b.js"
+  ]
+}
