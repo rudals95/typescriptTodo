@@ -1,5 +1,7 @@
 import { Button, Modal, Input, ModalHeader, ModalOverlay, ModalContent, ModalFooter, ModalCloseButton, ModalBody } from "@chakra-ui/react";
 import { ITodos } from "../../types/todo";
+import { BsPlusCircle } from "react-icons/bs";
+import { ModalDiv } from "./style";
 
 type Props = {
   isOpen: boolean;
@@ -17,13 +19,13 @@ type Props = {
 export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, change, action, onOpen, onClose, formAction, fileChange }) => {
   return (
     <>
-      <Button
+      <BsPlusCircle
+        size="30px"
+        color="rgb(64 189 68)"
         onClick={() => {
           onOpen("");
         }}
-      >
-        Open Modal
-      </Button>
+      />
 
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -34,7 +36,16 @@ export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, cha
             <ModalBody>삭제하시겠습니까?</ModalBody>
           ) : (
             <ModalBody>
+              <form onSubmit={formAction}>
+                <ModalDiv>
+                  <div className="form-group filebox">
+                    <label htmlFor="img_file">업로드</label>
+                    <input id="img_file" type="file" onChange={fileChange} />
+                  </div>
+                </ModalDiv>
+              </form>
               <Input
+                mt={"10px"}
                 value={value.title}
                 onChange={(e) => {
                   change(e, "title");

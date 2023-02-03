@@ -10,6 +10,7 @@ import moment from "moment/moment";
 import { FiEdit } from "react-icons/fi";
 import { FcCancel } from "react-icons/fc";
 import { BsCheckCircle } from "react-icons/bs";
+import { BiMinusCircle } from "react-icons/bi";
 import { success, Toast } from "./../../utiis/toast";
 
 const Detail = () => {
@@ -102,6 +103,14 @@ const Detail = () => {
                   }}
                 />
               </Box>
+              {data.img_URL !== null && (
+                <Box border="1px solid #E2E8F0" p="20px" mb="10px" className="img_container">
+                  <div>
+                    <img src={data.img_URL} alt="이미지" />
+                    <BiMinusCircle className="img_remove_btn" size="30px" color="rgb(213, 0, 0)" />
+                  </div>
+                </Box>
+              )}
             </>
           )}
 
