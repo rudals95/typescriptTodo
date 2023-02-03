@@ -140,7 +140,7 @@ const Todos = () => {
             </ul>
           </Container>
 
-          <Box display="flex">
+          <Box display="flex" p=" 0 20px 20px 20px">
             <IModal
               title={modalStatus ? "삭제" : "추가"}
               isOpen={isOpen}

@@ -4,7 +4,7 @@ export const Container = styled.div`
   font-family: "bsfont-r";
   margin: 0;
   padding: 20px;
-  min-height: 500px;
+  min-height: 450px;
   & > ul > li {
     border-bottom: 1px solid #bbb;
     padding: 10px;
@@ -40,6 +40,13 @@ export const DetailContainer = styled.div`
   & input {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   }
+  & > div > p {
+    min-width: 35px;
+  }
+  & > div > input {
+    min-width: 50px;
+    width: 100%;
+  }
   & > div:first-child {
     border-bottom: 1px solid #ddd;
     padding-bottom: 5px;
@@ -53,5 +60,13 @@ export const DetailContainer = styled.div`
   & > div > p.date {
     text-align: right;
     font-size: 14px;
+  }
+  & > .img_container > div {
+    display: felx;
+  }
+  & > .img_container > div > svg {
+    position: relative;
+    left: -30px;
+    min-width: 30px;
   }
 `;
