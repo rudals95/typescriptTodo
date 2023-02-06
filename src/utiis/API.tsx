@@ -1,10 +1,20 @@
-import axios from "axios";
+// import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
-const API = axios.create({
-  baseURL: "http://localhost:8085/api",
+const axiosConfig: AxiosRequestConfig = {
+  // baseURL: "https://jkm-project-server.de.r.appspot.com/api",
+  // baseURL: "http://localhost:8080/api",
+  baseURL: process.env.REACT_APP_ENV === "development" ? `${process.env.REACT_APP_API}` : `${process.env.REACT_APP_API}`,
   headers: { "Content-Type": "application/json" },
+
   withCredentials: true,
-});
+};
+// const API = axios.create({
+//   baseURL: "https://jkm-project-server.de.r.appspot.com/api",
+//   headers: { "Content-Type": "application/json" },
+//   withCredentials: true,
+// });
+const API = axios.create(axiosConfig);
 
 API.interceptors.request.use(
   async (config) => {
@@ -28,7 +38,6 @@ API.interceptors.request.use(
     return Promise.reject(err);
   }
 );
-
 // API.interceptors.response.use(
 //   (config) => {
 //     const data = config;
