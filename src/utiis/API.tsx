@@ -6,7 +6,6 @@ const axiosConfig: AxiosRequestConfig = {
   // baseURL: "http://localhost:8080/api",
   baseURL: process.env.REACT_APP_ENV === "development" ? `${process.env.REACT_APP_API}` : `${process.env.REACT_APP_API}`,
   headers: { "Content-Type": "application/json" },
-
   withCredentials: true,
 };
 // const API = axios.create({
