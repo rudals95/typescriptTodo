@@ -37,6 +37,7 @@ const Login = () => {
           localStorage.setItem("token", res.data.data.token);
           success(res.data.message);
           navigate("/todolist");
+          // navigate("/home");
         })
         .catch((err): void => {
           console.log(err.response.data);

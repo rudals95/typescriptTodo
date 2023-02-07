@@ -15,10 +15,12 @@ const Header = () => {
 
   const Test = async () => {
     await AuthAPI.assign("장경민").then((res) => {
-      console.log(res.data);
+      console.log(res.data, "어드민확인");
     });
   };
-  Test();
+  useEffect(() => {
+    Test();
+  }, []);
 
   return (
     <Box p="10px" display="flex" justifyContent="space-between" alignItems="center" borderBottom="1.5px solid #e3e0e0">

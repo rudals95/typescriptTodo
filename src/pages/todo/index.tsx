@@ -114,16 +114,6 @@ const Todos = () => {
     todoAPI.getData();
   }, [isOpen]);
 
-  // mobile{
-  //   padding:20px 20px;
-  //   }
-
-  //   pc{
-  //     padding:20px 40px;
-  //     max-width:550px;
-  //     margin:0 a
-  //     }
-
   return (
     <>
       <Box p={Media768() ? "20px 20px" : "20px 40px"} maxWidth={Media768() ? "" : "550px"} m={Media768() ? "" : "0 auto"}>

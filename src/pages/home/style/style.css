@@ -1,0 +1,19 @@
+.NomalStyle {
+  width: 80%;
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
+  transition: 0.1s all ease-in;
+}
+.MobileStyle {
+  width: 100%;
+  transition: 0.1s all ease-in;
+}
+
+.flex_item {
+  width: calc(50% - 5px);
+  /* width: 50%; */
+}
+
+.w100 {
+  width: 100%;
+}

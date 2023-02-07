@@ -39,7 +39,7 @@ export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, cha
               <form onSubmit={formAction}>
                 <ModalDiv>
                   <div className="form-group filebox">
-                    <label htmlFor="img_file">업로드</label>
+                    <label htmlFor="img_file">이미지 업로드</label>
                     <input id="img_file" type="file" onChange={fileChange} />
                   </div>
                 </ModalDiv>
@@ -64,14 +64,7 @@ export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, cha
           )}
 
           <ModalFooter>
-            <Button
-              colorScheme="blue"
-              mr={3}
-              onClick={formAction}
-              // onClick={() => {
-              //   action("delete");
-              // }}
-            >
+            <Button colorScheme="blue" mr={3} onClick={formAction}>
               저장
             </Button>
             <Button colorScheme="red" onClick={onClose}>
