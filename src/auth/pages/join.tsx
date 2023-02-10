@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Box, Input } from "@chakra-ui/react";
 
@@ -14,7 +14,9 @@ const Join = () => {
     email: "",
     password: "",
     passwordComfrim: "",
+    username: "",
   });
+  const navigate = useNavigate();
 
   const joinEvent: IUserForm = {
     handleChange: (e, type) => {
@@ -26,9 +28,11 @@ const Join = () => {
     handleSubmit: async (e) => {
       e.preventDefault();
       const post = {
+        username: value.username,
         email: value.email,
         password: value.password,
       };
+      if (value.username === "") return error("이름을입력하세요");
       if (value.email === "") return error("이메일을입력하세요");
       if (value.password === "") return error("비밀번호를입력하세요");
       if (value.password !== value.passwordComfrim) return error("비밀번호가 일치하지않습니다");
@@ -37,6 +41,7 @@ const Join = () => {
         .then((res) => {
           console.log("결과", res);
           success(res.data.message);
+          navigate("/login");
         })
         .catch((err) => {
           console.log("err", err.response);
@@ -51,6 +56,21 @@ const Join = () => {
       <Container>
         <Form onSubmit={joinEvent.handleSubmit}>
           <h2>회원가입</h2>
+          <label htmlFor="">
+            <span>이름</span>
+            <div>
+              <Input
+                w="100%"
+                type="text"
+                id="username"
+                name="username"
+                value={value.username}
+                onChange={(e) => {
+                  joinEvent.handleChange(e, "username");
+                }}
+              />
+            </div>
+          </label>
           <label htmlFor="">
             <span>이메일 주소</span>
             <div>

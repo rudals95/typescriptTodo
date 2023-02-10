@@ -1,9 +1,12 @@
-import { ITodoDeleteData, ITodoPutData, ITodos } from "../types/todo";
+import { IComment, ITodoDeleteData, ITodoPutData, ITodos } from "../types/todo";
 import API from "./../utiis/API";
 
 const TodoAPI = {
   createToDo: (data: ITodos) => {
     return API.post("/todos/test", data);
+  },
+  commentTodo: (commentData: IComment) => {
+    return API.post("/todos/comment", commentData);
   },
   getToDo: () => {
     return API.get(`/todos`);

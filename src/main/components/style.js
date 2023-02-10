@@ -27,3 +27,50 @@ export const ModalDiv = styled.div`
     border: 0;
   }
 `;
+
+//페이지네이션
+
+export const PaginationBox = styled.div`
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  ul.pagination li {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #e2e2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+  }
+  ul.pagination li:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+  ul.pagination li:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+  ul.pagination li {
+    cursor: pointer;
+    text-decoration: none;
+    color: #337ab7;
+    font-size: 1rem;
+  }
+  ul.pagination li.active {
+    color: white;
+  }
+  ul.pagination li.active {
+    background-color: #c9d8f0;
+    color: #3367b5;
+  }
+  ul.pagination li:hover {
+    border-color: #467bcb;
+    color: #467bcb;
+  }
+`;

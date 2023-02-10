@@ -4,19 +4,23 @@ import Auth from "./auth";
 import Main from "./main";
 import Login from "./auth/pages/login";
 import Join from "./auth/pages/join";
+import { Provider } from "react-redux";
+import store from "./store/index";
 
 function App() {
   return (
     <ChakraProvider>
-      <Routes>
-        <Route element={<Auth isAuthenticated={true} />}>
-          <Route path="/*" element={<Main />} />
-        </Route>
-        <Route element={<Auth isAuthenticated={false} />}>
-          <Route path="/join" element={<Join />} />
-          <Route path="/login" element={<Login />} />
-        </Route>
-      </Routes>
+      <Provider store={store}>
+        <Routes>
+          <Route element={<Auth isAuthenticated={true} />}>
+            <Route path="/*" element={<Main />} />
+          </Route>
+          <Route element={<Auth isAuthenticated={false} />}>
+            <Route path="/join" element={<Join />} />
+            <Route path="/login" element={<Login />} />
+          </Route>
+        </Routes>
+      </Provider>
     </ChakraProvider>
   );
 }

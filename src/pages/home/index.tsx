@@ -1,112 +1,128 @@
-import { useEffect, useState, useRef } from "react";
-import { Box } from "@chakra-ui/react";
+import { useEffect, useState, useMemo } from "react";
+import { Box, Select, Input } from "@chakra-ui/react";
 import { Media768, Medi590 } from "../../utiis/Media";
-import { Container, ContainerRight } from "./style/homeStyle";
+import { Container, ContainerRight, ListHead, ListBody } from "./style/homeStyle";
 import "./style/style.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { BsPlusCircle } from "react-icons/bs";
+import BoardAPI from "./../../api/board";
+import { IBoardListGet } from "./types";
+import { error } from "../../utiis/toast";
+import Pagenation from "./../../main/components/Pagenation";
+import qs from "query-string";
 
 const Home = () => {
-  const [list, setList] = useState([0, 1]);
-  const containerRef: any = useRef(null);
-  const dragItemRef: any = useRef(null);
-  const [originPos, setOriginPos] = useState({ x: 0, y: 0 });
-  const [clientPos, setClientPos] = useState({ x: 0, y: 0 });
-  const [pos, setPos] = useState({ left: 0, top: 0 });
-  const [boxLine, setBoxLine] = useState(true);
+  // eslint-disable-next-line no-restricted-globals
+  const QS = qs.parse(location.search);
+  const [list, setList] = useState([{ _id: "", no: 0, img_URL: "", writer: "", title: "", createdAt: "" }]);
+  const [total, setTotal] = useState(0); // 페이징
+  const [nowPage, setNowPage] = useState(Number(QS.page));
+  const navigate = useNavigate();
 
-  const dragStartHandler = (e: any) => {
-    const originPosTemp = { ...originPos };
-    originPosTemp["x"] = e.target.offsetLeft;
-    originPosTemp["y"] = e.target.offsetTop;
-    // console.log(originPosTemp, "드래그 시작 좌측 상단 점");
-
-    setOriginPos(originPosTemp); //처음 드래그시작값 저장
-
-    const clientPosTemp = { ...clientPos };
-    clientPosTemp["x"] = e.clientX;
-    clientPosTemp["y"] = e.clientY;
-
-    setClientPos(clientPosTemp);
+  const boadrAPI: IBoardListGet = {
+    getData: async (apiUrl, obj) => {
+      await BoardAPI.getBoard(apiUrl, obj)
+        .then((res) => {
+          setList(res.data.data);
+          setTotal(Math.ceil(res.data.totalCount / 10));
+          console.log(res.data);
+        })
+        .catch((err) => {
+          error(err.response);
+        });
+    },
   };
+  useEffect(() => {
+    let url = `/home?page=${nowPage}`;
+    navigate(url);
+  }, [nowPage]);
 
-  const dragHandler = (e: any) => {
-    const posTemp = { ...pos };
-    posTemp["left"] = e.target.offsetLeft + e.clientX - clientPos.x;
-    posTemp["top"] = e.target.offsetTop + e.clientY - clientPos.y;
-    setPos(posTemp);
-
-    const clientPosTemp = { ...clientPos };
-    clientPosTemp["x"] = e.clientX;
-    clientPosTemp["y"] = e.clientY;
-    setClientPos(clientPosTemp);
-    console.log(pos, "움직일거");
-    console.log(dragItemRef.current.clientWidth + 2);
-    if (pos.left < 0 || pos.left - 11 > dragItemRef.current.clientWidth + 1 || pos.top < 0 || pos.top > 404) {
-      setBoxLine(false);
-    } else {
-      setBoxLine(true);
-    }
-  };
-
-  const dragOverHandler = (e: any) => {
-    e.preventDefault();
-  };
-
-  const isContainer = () => {
-    if (pos.left < 0 || pos.left - 11 > dragItemRef.current.clientWidth + 1 || pos.top < 0 || pos.top > 404) return true;
-    else return false;
-  };
-  const dragEndHandler = (e: any) => {
-    setBoxLine(true);
-    if (isContainer()) {
-      const posTemp = { ...pos };
-      posTemp["left"] = originPos.x;
-      posTemp["top"] = originPos.y;
-      setPos(posTemp);
-    }
-  };
+  useEffect(() => {
+    const apiUrl = `/board`;
+    const obj = {
+      offset: Number(QS.page) || 0,
+    };
+    if (QS.page === "0") setNowPage(0);
+    boadrAPI.getData(apiUrl, obj);
+    // eslint-disable-next-line no-restricted-globals
+  }, [location.search]);
 
   return (
     <>
-      <Box p={Media768() ? "20px 20px" : "20px 40px"} maxWidth={Media768() ? "" : "1024px"} m={Media768() ? "" : "0 auto"} display={"flex"} justifyContent="space-between">
+      <Box p={Media768() ? "20px 20px" : "20px 40px"} maxWidth={Media768() ? "" : "1280px"} m={Media768() ? "" : "0 auto"} display={"flex"} justifyContent="space-between">
         <Box className={Media768() ? "MobileStyle" : "NomalStyle"} border="1px solid #d1d1d1" p="20px" borderRadius="5px">
-          <Container ref={containerRef} style={boxLine ? { border: "1px solid #fff" } : { border: "2px solid rgb(239 6 6 / 57%)" }}>
-            <div className="flex_container" style={{ position: "relative" }}>
-              {list.map((c, idx) => {
+          <Container>
+            {/* <h1>Free Board</h1> */}
+            <Box border="1px solid #d1d1d1" h="100%" p="8px" display="flex">
+              <Select w="120px">
+                <option value="">전체</option>
+              </Select>
+              <Input ml="10px" maxWidth="240px" />
+            </Box>
+            <Box p="10px" mt="15px" border="1px solid #d1d1d1">
+              <ListHead>
+                <li>
+                  <p>No</p>
+                </li>
+                <li>
+                  <p>이미지</p>
+                </li>
+                <li>
+                  <p>작성자</p>
+                </li>
+                <li>
+                  <p>제목</p>
+                </li>
+                <li>
+                  <p>등록일</p>
+                </li>
+              </ListHead>
+              {list.map((c) => {
                 return (
-                  <div
-                    ref={dragItemRef}
-                    className={Medi590() ? "w100 mobile_item" : "flex_item"}
-                    key={idx}
-                    draggable
-                    onDragStart={(e) => {
-                      dragStartHandler(e);
-                    }}
-                    onDrag={(e) => {
-                      dragHandler(e);
-                    }}
-                    onDragOver={(e) => dragOverHandler(e)}
-                    onDragEnd={(e) => dragEndHandler(e)}
-                    style={{ position: "absolute", left: pos.left, top: pos.top }}
-                  >
-                    test
-                  </div>
+                  <ListBody key={c._id}>
+                    <li>
+                      <p>{c.no}</p>
+                    </li>
+                    <li>
+                      <p>{c.img_URL}</p>
+                    </li>
+                    <li>
+                      <p>{c.writer}</p>
+                    </li>
+                    <li>
+                      <p>{c.title}</p>
+                    </li>
+                    <li>
+                      <p>{c.createdAt}</p>
+                    </li>
+                  </ListBody>
                 );
               })}
-            </div>
+            </Box>
           </Container>
+          <BsPlusCircle
+            size="30px"
+            color="rgb(64 189 68)"
+            onClick={() => {
+              navigate("/board/save");
+            }}
+          />
+          <Pagenation totalPage={total} nowPage={Number(QS.page)} pageChange={setNowPage} />
         </Box>
         {!Media768() && (
           <Box width={"calc(20% - 20px)"} border=" 1px solid #d1d1d1" borderRadius="5px">
             <ContainerRight>
-              <h2 style={{ marginBottom: "10px" }}>메뉴</h2>
-              {list.map((c, idx) => {
+              <h2 style={{ marginBottom: "10px" }}></h2>
+              {/* {list.map((c, idx) => {
                 return (
                   <div key={idx}>
-                    <Link to="/todolist">투두</Link>
+                    <Link to="/todolist"></Link>
                   </div>
                 );
-              })}
+              })} */}
+              <div>
+                <Link to="/todolist"></Link>
+              </div>
             </ContainerRight>
           </Box>
         )}

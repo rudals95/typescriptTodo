@@ -16,6 +16,14 @@ type Props = {
   fileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
+type PropsBoard = {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  modalStatus: boolean;
+  formAction: (e: any) => void;
+};
+
 export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, change, action, onOpen, onClose, formAction, fileChange }) => {
   return (
     <>
@@ -74,5 +82,27 @@ export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, cha
         </ModalContent>
       </Modal>
     </>
+  );
+};
+
+export const IModalBoard: React.FC<PropsBoard> = ({ title, isOpen, modalStatus, onClose, formAction }) => {
+  return (
+    <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>{title}</ModalHeader>
+        <ModalCloseButton />
+        {modalStatus ? <ModalBody>삭제하시겠습니까?</ModalBody> : <ModalBody>등록하시겠습니까?</ModalBody>}
+
+        <ModalFooter>
+          <Button colorScheme="blue" mr={3} onClick={formAction}>
+            저장
+          </Button>
+          <Button colorScheme="red" onClick={onClose}>
+            취소
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 };

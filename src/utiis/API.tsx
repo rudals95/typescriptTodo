@@ -2,17 +2,11 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 const axiosConfig: AxiosRequestConfig = {
-  // baseURL: "https://jkm-project-server.de.r.appspot.com/api",
-  // baseURL: "http://localhost:8080/api",
   baseURL: process.env.REACT_APP_ENV === "development" ? `${process.env.REACT_APP_API}` : `${process.env.REACT_APP_API}`,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 };
-// const API = axios.create({
-//   baseURL: "https://jkm-project-server.de.r.appspot.com/api",
-//   headers: { "Content-Type": "application/json" },
-//   withCredentials: true,
-// });
+
 const API = axios.create(axiosConfig);
 
 API.interceptors.request.use(

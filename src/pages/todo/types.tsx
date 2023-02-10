@@ -1,4 +1,4 @@
-import { ITodoPutData } from "../../types/todo";
+import { IComment, ITodoPutData } from "../../types/todo";
 
 export interface ITodoList {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>, type: string) => void;
@@ -13,5 +13,6 @@ export interface ITodoReturn {
 export interface ITodoDetail {
   getDetail: (id: string | undefined) => void;
   updateData: (id: string | undefined, { data }: ITodoPutData) => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>, type: string) => void;
+  commentSave: (commentData: IComment) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement> | any, type: string) => void;
 }

@@ -9,10 +9,12 @@ import { IModal } from "../../main/components/Modal";
 import { success, Toast, error } from "./../../utiis/toast";
 import { Media768 } from "../../utiis/Media";
 import { IPostForm } from "../../auth/types";
+import Loading from "./../../main/components/Loading";
 
 const Todos = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalStatus, setModalStatus] = useState<boolean>(false);
+  const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
 
   const [dataid, setDataId] = useState<string>("");
   const [file, setFile] = useState<any>();
@@ -70,14 +72,16 @@ const Todos = () => {
       }));
     },
     handleClick: async () => {
+      onClose();
+      await setLoadingStatus(true);
       await TodoAPI.createToDo(value)
         .then((res) => {
+          setLoadingStatus(false);
           success("완료되었습니다");
         })
         .catch((err) => {
           error(err.response.data.details);
         });
-      onClose();
     },
   };
 
@@ -87,17 +91,23 @@ const Todos = () => {
         .then((res) => {
           setList(res.data.data);
         })
-        .catch((err) => {});
+        .catch((err) => {
+          error(err.response);
+        });
     },
     deleteData: async () => {
       const data: ITodoDeleteData = {
         seq: dataid,
       };
+      setLoadingStatus(true);
       await TodoAPI.deleteTodo(data)
+
         .then((res) => {
+          setLoadingStatus(false);
           success("삭제되었습니다");
         })
         .catch((err) => {
+          setLoadingStatus(false);
           console.log(err.response.data);
         });
       onClose();
@@ -116,6 +126,7 @@ const Todos = () => {
 
   return (
     <>
+      {loadingStatus ? <Loading /> : null}
       <Box p={Media768() ? "20px 20px" : "20px 40px"} maxWidth={Media768() ? "" : "550px"} m={Media768() ? "" : "0 auto"}>
         <Box border=" 1px solid #d1d1d1" borderRadius="5px">
           <Container>

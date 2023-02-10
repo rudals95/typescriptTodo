@@ -1,25 +1,46 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Box } from "@chakra-ui/react";
 import { Title, ButtonBox } from "../../styles/mainStyle";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
 import AuthAPI from "./../../api/auth";
+import { useDispatch } from "react-redux";
+import { save } from "../../store/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const user: any = localStorage.getItem("user");
+  const json: any = JSON.parse(user);
   const logOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     navigate("/login");
   };
-
-  const Test = async () => {
-    await AuthAPI.assign("장경민").then((res) => {
-      console.log(res.data, "어드민확인");
+  const dispatch = useDispatch();
+  const userStorage = async () => {
+    dispatch(
+      save({
+        username: json.username,
+        admin: json.admin,
+        email: json.email,
+        joindate: json.joindate,
+        _id: json._id,
+      })
+    );
+    const userName = new Promise<void>((resolve, reject) => {
+      resolve(json.username);
+    });
+    return userName;
+  };
+  const isAdmin = async (userName: string) => {
+    await AuthAPI.assign(userName).then((res) => {
+      console.log(res.data);
     });
   };
   useEffect(() => {
-    Test();
+    userStorage();
+    isAdmin(json.username);
   }, []);
 
   return (
@@ -30,7 +51,7 @@ const Header = () => {
           navigate(-1);
         }}
       />
-      <Title>ToDo</Title>
+      <Title>ToDo App</Title>
       <ButtonBox>
         <FiLogOut size="20px" onClick={logOut} />
       </ButtonBox>

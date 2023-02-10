@@ -35,6 +35,17 @@ const Login = () => {
         .then((res): void => {
           console.log(res.data);
           localStorage.setItem("token", res.data.data.token);
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              _id: res.data.data.user._id,
+              username: res.data.data.user.username,
+              email: res.data.data.user.email,
+              joindate: res.data.data.user.joindate,
+              admin: res.data.data.user.admin,
+            })
+          );
+
           success(res.data.message);
           navigate("/todolist");
           // navigate("/home");
