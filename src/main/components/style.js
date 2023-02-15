@@ -1,5 +1,74 @@
 import styled from "styled-components";
 
+export const MainDiv = styled.div`
+  display: flex;
+  & > div.sideBarStyle,
+  div.btnClickSideBar {
+    background: #27314c;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    transition: all 0.2s;
+    z-index: 2;
+  }
+  & > div.contents {
+    width: 100%;
+    padding-left: 280px;
+    transition: 0.2s all;
+  }
+  & > div.btnClickContents {
+    width: 100%;
+    padding-left: 50px;
+    transition: 0.2s all;
+  }
+`;
+
+export const HeaderDiv = styled.div`
+  box-shadow: 0 0.15rem 1.75rem 0 rgb(58 59 69 / 15%);
+  width: 100%;
+  height: 70px;
+  background: #fff;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const ListDiv = styled.div`
+  border-bottom: 2px solid #212529;
+  border-top: 2px solid #212529;
+  overflow-x: auto;
+  & > div {
+    color: #868e96;
+    display: flex;
+    font-family: prr;
+  }
+  & > div:first-child {
+    color: #212529;
+    font-family: prb;
+  }
+  & > div:first-child > div {
+    border-top: none;
+  }
+  & > div div {
+    align-items: center;
+    border-right: 1px solid #b2b2b2;
+    border-top: 1px solid #b2b2b2;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    min-height: 45px;
+    text-align: center;
+  }
+  & > div div p.ellipsis {
+    margin: 0;
+    overflow: hidden;
+    padding: 0 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
+
 export const ModalDiv = styled.div`
   & > div.filebox label {
     display: inline-block;

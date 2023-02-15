@@ -1,3 +1,12 @@
+export interface IList {
+  _id: string;
+  no: number;
+  img_URL: string;
+  writer: string;
+  title: string;
+  createdAt: string;
+}
+
 export interface IBoard {
   title: string;
   content: string;

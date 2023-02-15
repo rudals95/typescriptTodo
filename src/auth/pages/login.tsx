@@ -47,7 +47,7 @@ const Login = () => {
           );
 
           success(res.data.message);
-          navigate("/todolist");
+          navigate("/home?page=0");
           // navigate("/home");
         })
         .catch((err): void => {

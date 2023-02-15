@@ -1,10 +1,10 @@
 import loadable from "@loadable/component";
-import Loading from "./../main/components/Loading";
+import Loading from "../main/components/Loading";
 
 const Home = loadable(() => import("../pages/home/index"), {
   fallback: <Loading />,
 });
-const Board = loadable(() => import("../pages/home/Save"), {
+const Board = loadable(() => import("../pages/home/pages/Detail"), {
   fallback: <Loading />,
 });
 const Todos = loadable(() => import("../pages/todo/index"), {

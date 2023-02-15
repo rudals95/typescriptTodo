@@ -107,6 +107,11 @@ export const ListBody = styled.ul`
     min-width: 150px;
     width: 30%;
   }
+  & > li>p>img{
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+  }
 `;
 
 export const InputBox = styled.div`

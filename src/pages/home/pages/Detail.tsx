@@ -1,21 +1,18 @@
-import { useEffect, useState } from "react";
-import { Media768, Medi590 } from "../../utiis/Media";
+import { useState } from "react";
+import { Media768 } from "../../../utiis/Media";
 import { Box, Input, Textarea, Button, useDisclosure } from "@chakra-ui/react";
-import { InputBox } from "./style/homeStyle";
-import "./style/style.css";
-import { ITodos, ITodoArr, ITodoDeleteData } from "./../../types/todo";
-import { IPostForm } from "../../auth/types";
-import { error, Toast, success } from "../../utiis/toast";
+import { InputBox } from "../style/homeStyle";
+import "../style/style.css";
+import { IPostForm } from "../../../auth/types";
+import { error, Toast, success } from "../../../utiis/toast";
 
-import BoardAPI from "../../api/board";
-import { ITodoReturn } from "../todo/types";
-import { ITodoList } from "./../todo/types";
-import { IModalBoard } from "../../main/components/Modal";
+import BoardAPI from "../../../api/board";
+import { IModalBoard } from "../../../main/components/Modal";
 import { useNavigate } from "react-router-dom";
-import { IBoard, IBoardArr, IBoardDeleteData } from "../../types/board";
-import { IBoardEvent, IBoardReturn } from "./types";
+import { IBoard, IBoardArr, IBoardDeleteData } from "../../../types/board";
+import { IBoardEvent, IBoardReturn } from "../types";
 
-const Save = () => {
+const Detail = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalStatus, setModalStatus] = useState<boolean>(false);
   const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
@@ -76,18 +73,6 @@ const Save = () => {
         [type]: e.target.value,
       }));
     },
-    // handleClick: async () => {
-    //   onClose();
-    //   await setLoadingStatus(true);
-    //   await BoardAPI.commentBoard(value)
-    //     .then((res) => {
-    //       setLoadingStatus(false);
-    //       success("완료되었습니다");
-    //     })
-    //     .catch((err) => {
-    //       error(err.response.data.details);
-    //     });
-    // },
   };
 
   const boardAPI: IBoardReturn = {
@@ -108,12 +93,6 @@ const Save = () => {
         });
       onClose();
     },
-  };
-
-  const openModal = (btn: string) => {
-    if (btn === "delete") setModalStatus(true);
-    else setModalStatus(false);
-    onOpen();
   };
 
   return (
@@ -189,4 +168,4 @@ const Save = () => {
   );
 };
 
-export default Save;
+export default Detail;
