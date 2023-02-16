@@ -26,10 +26,23 @@ export interface IBoardData extends IBoard {
   seq: string;
 }
 
-export interface IBoardArr extends Array<IBoardData> {}
 export interface IBoardPutData {
   data: IBoard;
 }
 export interface IBoardDeleteData {
   seq: string;
+}
+
+export interface IKey {
+  //검색 키값 타입
+  name: string;
+  value: string;
+}
+
+export interface IQSParams {
+  //쿼리키
+  paramsValue: any;
+  searchValue: any;
+  startDate: any;
+  endDate: any;
 }

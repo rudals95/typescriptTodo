@@ -9,7 +9,7 @@ import { error, Toast, success } from "../../../utiis/toast";
 import BoardAPI from "../../../api/board";
 import { IModalBoard } from "../../../main/components/Modal";
 import { useNavigate } from "react-router-dom";
-import { IBoard, IBoardArr, IBoardDeleteData } from "../../../types/board";
+import { IBoard, IBoardData, IBoardDeleteData } from "../../../types/board";
 import { IBoardEvent, IBoardReturn } from "../types";
 
 const Detail = () => {
@@ -25,7 +25,7 @@ const Detail = () => {
     content: "",
   });
 
-  const [list, setList] = useState<IBoardArr>([
+  const [list, setList] = useState<Array<IBoardData>>([
     {
       title: "",
       content: "",
@@ -73,6 +73,12 @@ const Detail = () => {
         [type]: e.target.value,
       }));
     },
+    handleSellectChange: (e, type) => {
+      setValue((state) => ({
+        ...state,
+        [type]: e.target.value,
+      }));
+    },
   };
 
   const boardAPI: IBoardReturn = {
@@ -102,7 +108,7 @@ const Detail = () => {
           <form onSubmit={onSubmit.handleSubmit}>
             <Box>
               <div className="form-group filebox">
-                <label htmlFor="img_file">이미지 업로드</label>
+                <label htmlFor="img_file"></label>
                 <input id="img_file" type="file" onChange={onSubmit.handleChange} />
               </div>
             </Box>

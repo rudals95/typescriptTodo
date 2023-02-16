@@ -1,11 +1,11 @@
 import { FiUser } from "react-icons/fi";
 import { AiFillNotification } from "react-icons/ai";
 
-//사이드바 메뉴 array
+//사이드바 메뉴 arra
 export const Submenu = [
   {
     title: "회원관리",
-    subMenu: [{ name: "회원관리", url: "/home?page=0" }],
+    subMenu: [{ name: "회원관리", url: "/home?page=0&key=title" }],
     icon: <FiUser fontSize={"20px"} color="#fff" />,
   },
   {

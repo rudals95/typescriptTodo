@@ -23,3 +23,38 @@
 .w100 {
   width: 100%;
 }
+
+.labelStyle {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.labelStyle::before {
+  content: "";
+  width: 1px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background: #dee2e6;
+  margin-left: 9px;
+}
+.labelStyle button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  right: 0;
+  z-index: 1;
+}
+
+.labelStyle button img {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  transform: translate(50%, -50%);
+}

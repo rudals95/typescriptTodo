@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import { useState } from "react";
 import { MainDiv } from "./components/style";
 import SideBar from "./components/sidebar";
+import { Media768 } from "../utiis/Media";
 
 const Main = () => {
   const [show, setShow] = useState<boolean>(true);
@@ -16,7 +17,7 @@ const Main = () => {
     <>
       <MainDiv>
         <SideBar show={show} />
-        <div className={show ? "contents" : "btnClickContents"}>
+        <div className={Media768() ? "btnClickContents" : show ? "contents" : "btnClickContents"}>
           <Header showSideBar={showSideBar} show={show} />
           <Routes>
             <Route path="/" element={<Contents />}>
