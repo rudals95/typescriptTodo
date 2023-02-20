@@ -5,6 +5,7 @@ import { Button } from "@chakra-ui/react";
 import moment from "moment/moment";
 import { ParsedQuery } from "query-string";
 import { Media768 } from "../../../utiis/Media";
+import { Link } from "react-router-dom";
 
 interface IlistStyle {
   width: string;
@@ -74,7 +75,7 @@ const ListComponent: React.FC<Props> = ({ listWidth, list, number, QS }) => {
             {list !== undefined ? (
               list.map((c: any, idx) => {
                 return (
-                  <div key={c._id} style={{ color: "#868e96", fontFamily: "prb" }}>
+                  <Link to={`/board/${c._id}`} key={c._id} style={{ color: "#868e96", fontFamily: "prb" }}>
                     <div style={{ color: " #868e96", width: "10%", minWidth: "50px", padding: "0 8px" }}>
                       <p
                         style={{
@@ -98,7 +99,7 @@ const ListComponent: React.FC<Props> = ({ listWidth, list, number, QS }) => {
                         {moment(c.createdAt).format("YYYY-MM-DD")} / {c.writer}
                       </p>
                     </div>
-                  </div>
+                  </Link>
                 );
               })
             ) : (

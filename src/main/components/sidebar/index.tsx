@@ -28,7 +28,7 @@ const SideBar: React.FC<Props> = ({ show }) => {
                         <MenuItem display="flex" flexDirection="column">
                           {c.subMenu.map((i) => {
                             return (
-                              <Link key={i.name} to={i.url} className="m_side_btn">
+                              <Link style={{ width: "100%", textAlign: "center" }} key={i.name} to={i.url} className="m_side_btn">
                                 {i.name}
                               </Link>
                             );
@@ -70,7 +70,9 @@ const SideBar: React.FC<Props> = ({ show }) => {
                             return (
                               <li key={idx}>
                                 <Box p="8px 16px" m="0 10px" className="hover_btn">
-                                  <Link to={current.url}>{current.name}</Link>
+                                  <Link style={{ width: "100%", textAlign: "center" }} to={current.url}>
+                                    {current.name}
+                                  </Link>
                                 </Box>
                               </li>
                             );

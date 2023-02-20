@@ -12,7 +12,8 @@ export interface IBoard {
   content: string;
   createdAt?: string;
   updatedAt?: string;
-  img_URL?: string;
+  img_URL?: string | undefined;
+  comment?: [];
 }
 export interface IComment {
   _id: string | undefined;
@@ -24,6 +25,7 @@ export interface IComment {
 export interface IBoardData extends IBoard {
   _id: string;
   seq: string;
+  img_URL: string;
 }
 
 export interface IBoardPutData {

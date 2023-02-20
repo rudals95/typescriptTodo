@@ -1,6 +1,7 @@
 import { Button, Modal, Input, ModalHeader, ModalOverlay, ModalContent, ModalFooter, ModalCloseButton, ModalBody } from "@chakra-ui/react";
 import { ITodos } from "../../types/todo";
 import { BsPlusCircle } from "react-icons/bs";
+import { FaCamera } from "react-icons/fa";
 import { ModalDiv } from "./style";
 
 type Props = {
@@ -47,7 +48,9 @@ export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, cha
               <form onSubmit={formAction}>
                 <ModalDiv>
                   <div className="form-group filebox">
-                    <label htmlFor="img_file">이미지 업로드</label>
+                    <label htmlFor="img_file">
+                      <FaCamera size="30px" />
+                    </label>
                     <input id="img_file" type="file" onChange={fileChange} />
                   </div>
                 </ModalDiv>

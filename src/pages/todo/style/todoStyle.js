@@ -50,12 +50,16 @@ export const DetailContainer = styled.div`
   & > div:first-child {
     border-bottom: 1px solid #ddd;
     padding-bottom: 5px;
+    display: flex;
+    align-items: center;
   }
   & > div:nth-child(2) {
+    align-items: baseline;
     margin-top: 10px;
     margin-bottom: 10px;
     border-bottom: 1px solid #ddd;
     padding-bottom: 20px;
+    display: flex;
   }
   & > div > p.date {
     text-align: right;

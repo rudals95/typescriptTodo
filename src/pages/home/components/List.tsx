@@ -3,7 +3,7 @@ import { Box, Input, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 import { IKey, IList, IQSParams } from "./../../../types/board";
-import { IBoardEvent, IBoardListGet } from "../types";
+import { IBoardListEvent } from "../types";
 import { error } from "../../../utiis/toast";
 import BoardAPI from "./../../../api/board";
 import Pagenation from "../../../main/components/Pagenation";
@@ -26,7 +26,7 @@ const List = () => {
   const [endValue, setEndValue] = useState(QS.enddate || "");
   const [clearSearch, setClearSearch] = useState(false);
   const [params, setParams] = useState<IQSParams>({
-    paramsValue: QS.key,
+    paramsValue: QS.key || "",
     searchValue: QS.value || "",
     startDate: QS.startdate || "",
     endDate: QS.enddate || "",
@@ -47,7 +47,17 @@ const List = () => {
     return arr;
   };
 
-  const boadrAPI: IBoardListGet = {
+  const listWidth = [
+    { style: { width: "5%", minWidth: "70px" }, innerText: "번호" },
+    { style: { width: "20%", minWidth: "150px" }, innerText: "이미지" },
+    { style: { width: "20%", minWidth: "200px" }, innerText: "이메일" },
+    { style: { width: "25%", minWidth: "200px" }, innerText: "제목" },
+    { style: { width: "25%", minWidth: "150px" }, innerText: "등록일" },
+    { style: { width: "5%", minWidth: "80px" }, innerText: "관리" },
+  ];
+
+  //검색벨류 변경
+  const boadrEvent: IBoardListEvent = {
     getData: async (apiUrl, obj) => {
       await BoardAPI.getBoard(apiUrl, obj)
         .then((res) => {
@@ -64,19 +74,6 @@ const List = () => {
           error(err.response);
         });
     },
-  };
-
-  const listWidth = [
-    { style: { width: "5%", minWidth: "70px" }, innerText: "번호" },
-    { style: { width: "20%", minWidth: "150px" }, innerText: "이미지" },
-    { style: { width: "20%", minWidth: "200px" }, innerText: "이메일" },
-    { style: { width: "25%", minWidth: "200px" }, innerText: "제목" },
-    { style: { width: "25%", minWidth: "150px" }, innerText: "등록일" },
-    { style: { width: "5%", minWidth: "80px" }, innerText: "관리" },
-  ];
-
-  //검색벨류 변경
-  const changeValue: IBoardEvent = {
     handleChange: (e, type) => {
       setParams((state) => ({
         ...state,
@@ -145,12 +142,15 @@ const List = () => {
       }));
     }
     if (QS.value === undefined) {
+      setSearchText("");
       setParams((state) => ({
         ...state,
         searchValue: "",
       }));
     }
     if (QS.startdate === undefined || QS.enddate === undefined) {
+      setEndValue("");
+      setStartValue("");
       setParams((state) => ({
         ...state,
         startDate: "",
@@ -163,11 +163,13 @@ const List = () => {
         startDate: QS.startdate,
         endDate: QS.enddate,
       }));
+      setStartValue("");
+      setEndValue("");
     }
 
     console.log(obj);
 
-    boadrAPI.getData(apiUrl, obj);
+    boadrEvent.getData(apiUrl, obj);
     // eslint-disable-next-line no-restricted-globals
   }, [location.search]);
 
@@ -188,7 +190,7 @@ const List = () => {
             maxWidth="150px"
             value={params.startDate || ""}
             onChange={(e) => {
-              changeValue.handleChange(e, "startDate");
+              boadrEvent.handleChange(e, "startDate");
             }}
           />
           <Input
@@ -199,15 +201,15 @@ const List = () => {
             maxWidth="150px"
             value={params.endDate || ""}
             onChange={(e) => {
-              changeValue.handleChange(e, "endDate");
+              boadrEvent.handleChange(e, "endDate");
             }}
           />
         </Box>
         <SearchBar
           searchOptions={searchOptions}
           params={params} // 파라미터
-          handleChange={changeValue.handleChange} // 파라미터 변경
-          handleSellectChange={changeValue.handleSellectChange} // 파라미터 변경
+          handleChange={boadrEvent.handleChange} // 파라미터 변경
+          handleSellectChange={boadrEvent.handleSellectChange} // 파라미터 변경
           Searchcomplete={Searchcomplete} //검색완료
           enterSearch={enterSearch} //엔터 검색
         />

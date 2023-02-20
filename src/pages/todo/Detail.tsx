@@ -1,4 +1,4 @@
-import { Box, Button, Input } from "@chakra-ui/react";
+import { Box, Button, Input, Textarea } from "@chakra-ui/react";
 import { Media768 } from "../../utiis/Media";
 import { DetailContainer } from "./style/todoStyle";
 import { useParams } from "react-router-dom";
@@ -14,6 +14,7 @@ import { BiMinusCircle } from "react-icons/bi";
 import { success, Toast } from "./../../utiis/toast";
 import { useSelector } from "react-redux";
 import Loading from "./../../main/components/Loading";
+import { FaCamera } from "react-icons/fa";
 
 const Detail = () => {
   const { id } = useParams();
@@ -21,6 +22,7 @@ const Detail = () => {
   const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
   const store: any = useSelector((store) => store);
 
+  const [file, setFile] = useState<any>();
   const [data, setData] = useState<ITodoData | ITodos>({
     title: "",
     content: "",
@@ -50,12 +52,19 @@ const Detail = () => {
         setLoadingStatus(false);
       });
     },
+
+    handleImg: (e) => {
+      if (e.target.files !== null) {
+        setFile({ img: e.target.files[0] });
+        console.log(e.target.files);
+      }
+    },
+
     updateData: (id, data) => {
       setLoadingStatus(true);
       TodoAPI.updateTodo(id, data)
         .then((res) => {
           setLoadingStatus(false);
-          console.log(res.data);
           success("수정되었습니다");
           setEditSwitch(true);
         })
@@ -79,6 +88,12 @@ const Detail = () => {
         [type]: e.target.value,
       }));
     },
+    handleTextChange: (e, type) => {
+      setData((state) => ({
+        ...state,
+        [type]: e.target.value,
+      }));
+    },
   };
   useEffect(() => {
     detailData.getDetail(id);
@@ -93,10 +108,21 @@ const Detail = () => {
             {editSwitch ? (
               <>
                 <div>
-                  <p>제목: {data.title}</p>
+                  <p>제목</p>
+                  <p style={{ width: "100%", border: "1px solid #ddd", padding: "10px", borderRadius: "5px", marginLeft: "10px", fontSize: "16px" }}>{data.title}</p>
                 </div>
                 <div>
-                  <p>내용: {data.content}</p>
+                  <p>내용:</p>
+                  <p style={{ width: "100%", border: "1px solid #ddd", padding: "10px", borderRadius: "5px", marginLeft: "10px", fontSize: "16px" }}>
+                    {data.content.split("\n").map((c, i) => {
+                      return (
+                        <span key={i}>
+                          {c}
+                          <br />
+                        </span>
+                      );
+                    })}
+                  </p>
                 </div>
                 {data.img_URL !== null && (
                   <Box border="1px solid #E2E8F0" p="20px" mb="10px">
@@ -119,20 +145,44 @@ const Detail = () => {
                 </Box>
                 <Box display="flex" alignItems="center" mb="10px" pb="10px" borderBottom="1px solid #ddd">
                   <p>내용: </p>
-                  <Input
+                  <Textarea
                     ml="10px"
-                    w="auto"
+                    w="100%"
                     value={data.content}
                     onChange={(e) => {
-                      detailData.handleChange(e, "content");
+                      detailData.handleTextChange(e, "content");
                     }}
                   />
                 </Box>
-                {data.img_URL !== null && (
+                {data.img_URL !== null ? (
                   <Box border="1px solid #E2E8F0" p="20px" mb="10px" className="img_container">
                     <div>
                       <img src={data.img_URL} alt="이미지" />
-                      <BiMinusCircle className="img_remove_btn" size="30px" color="rgb(213, 0, 0)" />
+                      <BiMinusCircle
+                        onClick={() => {
+                          setData((state) => ({ ...state, img_URL: null }));
+                        }}
+                        className="img_remove_btn"
+                        size="30px"
+                        color="rgb(213, 0, 0)"
+                      />
+                    </div>
+                  </Box>
+                ) : (
+                  <Box border="1px solid #E2E8F0" p="20px" mb="10px" justifyContent="center" display="flex">
+                    <div className="form-group filebox">
+                      <label htmlFor="img_file">
+                        <FaCamera size="30px" />
+                      </label>
+                      <input
+                        style={{ display: "none" }}
+                        id="img_file"
+                        onClick={() => {
+                          alert("준비중입니다");
+                        }}
+                        // type="file"
+                        onChange={detailData.handleImg}
+                      />
                     </div>
                   </Box>
                 )}
@@ -162,7 +212,7 @@ const Detail = () => {
                 />
                 <BsCheckCircle
                   onClick={() => {
-                    detailData.updateData(id, { data });
+                    detailData.updateData(id, data);
                   }}
                   style={{
                     marginLeft: "20px",

@@ -107,7 +107,7 @@ export const ListBody = styled.ul`
     min-width: 150px;
     width: 30%;
   }
-  & > li>p>img{
+  & > li > p > img {
     width: 50px;
     height: 50px;
     margin: 0 auto;
@@ -127,5 +127,15 @@ export const InputBox = styled.div`
   }
   & > label > div {
     width: calc(100% - 50px);
+  }
+`;
+
+export const Detaildiv = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: "bsfont-r";
+  & > div {
+    border-bottom: solid 2px #ddd;
+    padding: 7px;
   }
 `;

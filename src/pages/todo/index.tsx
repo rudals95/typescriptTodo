@@ -40,6 +40,7 @@ const Todos = () => {
         setFile({ img: e.target.files[0] });
       }
     },
+
     handleSubmit: async (e) => {
       e.preventDefault();
       const formData = new FormData();

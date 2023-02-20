@@ -38,21 +38,21 @@ export const ListDiv = styled.div`
   border-bottom: 2px solid #212529;
   border-top: 2px solid #212529;
   overflow-x: auto;
-  & > div {
+  & > a {
     color: #868e96;
     display: flex;
     font-family: prr;
   }
-  & > div:first-child {
+  & > a:first-child {
     color: #212529;
     font-family: prb;
   }
-  & > div:first-child > div {
+  & > a:first-child > div {
     border-top: none;
   }
-  & > div div {
+  & > a div {
     align-items: center;
-    border-right: 1px solid #b2b2b2;
+
     border-top: 1px solid #b2b2b2;
     box-sizing: border-box;
     display: flex;
@@ -60,7 +60,7 @@ export const ListDiv = styled.div`
     min-height: 45px;
     text-align: center;
   }
-  & > div div p.ellipsis {
+  & > a div p.ellipsis {
     margin: 0;
     overflow: hidden;
     padding: 0 10px;
@@ -82,8 +82,6 @@ export const ModalDiv = styled.div`
     border: 1px solid #ebebeb;
     border-bottom-color: #e2e2e2;
     border-radius: 0.25em;
-    background-color: #5cb85c;
-    border-color: #4cae4c;
   }
   & > div.filebox input[type="file"] {
     position: absolute;

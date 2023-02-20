@@ -1,4 +1,4 @@
-import { IComment, ITodoDeleteData, ITodoPutData, ITodos } from "../types/todo";
+import { IComment, ITodoDeleteData, ITodos } from "../types/todo";
 import API from "./../utiis/API";
 
 const TodoAPI = {
@@ -18,8 +18,8 @@ const TodoAPI = {
     return API.get(`/todos/${id}`);
   },
 
-  updateTodo: (id: string | undefined, { data }: ITodoPutData) => {
-    return API.put(`/todos/${id}`, data);
+  updateTodo: (id: string | undefined, data: ITodos) => {
+    return API.post(`/todos/${id}`, data);
   },
 
   postTodo: (formData: any) => {
