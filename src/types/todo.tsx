@@ -17,7 +17,6 @@ export interface ITodosSeq {
   seq: string;
 }
 export interface ITodoData extends ITodos {
-  id: string;
   _id: string;
   seq: string;
 }

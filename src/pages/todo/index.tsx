@@ -33,7 +33,6 @@ const Todos = () => {
       updatedAt: "",
       createdAt: "",
       seq: "",
-      id: "",
     },
   ]);
 
