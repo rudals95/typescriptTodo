@@ -49,7 +49,7 @@ export const IModal: React.FC<Props> = ({ title, value, isOpen, modalStatus, cha
                 <ModalDiv>
                   <div className="form-group filebox">
                     <label htmlFor="img_file">
-                      <FaCamera size="30px" />
+                      <FaCamera style={{ color: "#ddd" }} size="30px" />
                     </label>
                     <input id="img_file" type="file" onChange={fileChange} />
                   </div>
