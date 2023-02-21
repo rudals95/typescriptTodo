@@ -92,6 +92,8 @@ const Todos = () => {
     getData: async () => {
       await TodoAPI.getToDo()
         .then((res) => {
+          console.log(res.data.data);
+
           setList(res.data.data);
         })
         .catch((err) => {
@@ -115,6 +117,11 @@ const Todos = () => {
         });
       onClose();
     },
+    changeData: async () => {
+      await TodoAPI.chageToDo().then((res) => {
+        setDropData(true);
+      });
+    },
   };
 
   const openModal = (btn: string) => {
@@ -123,16 +130,29 @@ const Todos = () => {
     onOpen();
   };
 
+  const [dropData, setDropData] = useState<boolean>(false);
   useEffect(() => {
     todoAPI.getData();
-  }, [isOpen]);
+  }, [isOpen, dropData]);
+
+  useEffect(() => {
+    // console.log(dropData);
+    return () => setDropData(false);
+  }, [dropData]);
 
   const handleChange = (result: any) => {
     if (!result.destination) return;
+
     const items = [...list]; // 새배열담기
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
+
+    console.log(result.destination, "옮긴");
+    console.log(reorderedItem, "선택");
+    console.log(items, "옮긴배열");
     setList(items);
+    setDropData(true);
+    todoAPI.changeData();
   };
 
   return (

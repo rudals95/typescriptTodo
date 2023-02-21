@@ -11,13 +11,15 @@ const TodoAPI = {
   getToDo: () => {
     return API.get(`/todos`);
   },
+  chageToDo: () => {
+    return API.post(`/todos/change`);
+  },
   deleteTodo: ({ seq }: ITodoDeleteData) => {
     return API.post(`/todos/remove`, { seq });
   },
   detailTodo: (id: string | undefined) => {
     return API.get(`/todos/${id}`);
   },
-
   updateTodo: (id: string | undefined, data: ITodos) => {
     return API.post(`/todos/${id}`, data);
   },

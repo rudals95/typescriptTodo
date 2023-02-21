@@ -8,6 +8,7 @@ export interface ITodoList {
 export interface ITodoReturn {
   getData: () => void;
   deleteData: (id: string) => void;
+  changeData: () => void;
 }
 
 export interface ITodoDetail {

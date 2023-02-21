@@ -18,7 +18,7 @@ type Props = {
 const Header: React.FC<Props> = ({ showSideBar, show }) => {
   const navigate = useNavigate();
   const [profileName, setProfileName] = useState("test");
-  const user: any = localStorage.getItem("user");
+  const user: any | null = localStorage.getItem("user");
   const json: any = JSON.parse(user);
 
   const logOut = () => {
@@ -30,19 +30,21 @@ const Header: React.FC<Props> = ({ showSideBar, show }) => {
   const dispatch = useDispatch();
 
   const userStorage = async () => {
-    dispatch(
-      save({
-        username: json.username,
-        admin: json.admin,
-        email: json.email,
-        joindate: json.joindate,
-        _id: json._id,
-      })
-    );
-    const userName = new Promise<void>((resolve, reject) => {
-      resolve(json.username);
-    });
-    return userName;
+    if (json !== null) {
+      dispatch(
+        save({
+          username: json.username,
+          admin: json.admin,
+          email: json.email,
+          joindate: json.joindate,
+          _id: json._id,
+        })
+      );
+      const userName = new Promise<void>((resolve, reject) => {
+        resolve(json.username);
+      });
+      return userName;
+    }
   };
   const isAdmin = async (userName: string) => {
     await AuthAPI.assign(userName).then((res) => {
@@ -51,7 +53,9 @@ const Header: React.FC<Props> = ({ showSideBar, show }) => {
   };
   useEffect(() => {
     userStorage();
-    isAdmin(json.username);
+    if (json !== null) {
+      isAdmin(json.username);
+    } else logOut();
   }, []);
 
   return (
