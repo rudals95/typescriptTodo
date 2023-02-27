@@ -16,7 +16,6 @@ const SideBar: React.FC<Props> = ({ show }) => {
               로고
             </Box>
             {Submenu.map((c, i) => {
-              console.log(c.subMenu);
               return (
                 <div key={c.title} className="btnBox">
                   <Menu>
@@ -90,7 +89,6 @@ const SideBar: React.FC<Props> = ({ show }) => {
                 로고
               </Box>
               {Submenu.map((c, i) => {
-                console.log(c.subMenu);
                 return (
                   <div key={c.title} className="btnBox">
                     <Menu>

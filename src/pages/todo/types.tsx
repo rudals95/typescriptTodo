@@ -1,4 +1,4 @@
-import { IComment, ITodos } from "../../types/todo";
+import { IComment, ITodosId, ITodos } from "../../types/todo";
 
 export interface ITodoList {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>, type: string) => void;
@@ -8,7 +8,8 @@ export interface ITodoList {
 export interface ITodoReturn {
   getData: () => void;
   deleteData: (id: string) => void;
-  changeData: () => void;
+  // changeData: (data: any) => void;
+  changeEnd: (data: any) => void;
 }
 
 export interface ITodoDetail {

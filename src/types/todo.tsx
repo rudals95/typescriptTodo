@@ -16,11 +16,18 @@ export interface IComment {
 export interface ITodosSeq {
   seq: string;
 }
+export interface ITodosId {
+  _id: string;
+}
 export interface ITodoData extends ITodos {
   _id: string;
   seq: string;
 }
 export interface ITodoArr extends Array<ITodoData> {}
+
+export interface ITodoPutData {
+  data: ITodos;
+}
 
 export interface ITodoDeleteData {
   seq: string;

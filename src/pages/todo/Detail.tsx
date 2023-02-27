@@ -62,8 +62,10 @@ const Detail = () => {
 
     updateData: (id, data) => {
       setLoadingStatus(true);
-      TodoAPI.updateTodo(id, data)
+      TodoAPI.updateTodo(id, { data })
         .then((res) => {
+          console.log(res.data.data);
+
           setLoadingStatus(false);
           success("수정되었습니다");
           setEditSwitch(true);

@@ -92,8 +92,11 @@ const Todos = () => {
     getData: async () => {
       await TodoAPI.getToDo()
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
 
+          res.data.data.map((c: any, i: number) => {
+            console.log(c.seq, "각순번", c.title, "인덱스");
+          });
           setList(res.data.data);
         })
         .catch((err) => {
@@ -117,8 +120,14 @@ const Todos = () => {
         });
       onClose();
     },
-    changeData: async () => {
-      await TodoAPI.chageToDo().then((res) => {
+    // changeData: async (reorderedItem) => {
+    //   await TodoAPI.chageToDo(reorderedItem).then((res) => {
+    //     console.log(res);
+    //     setDropData(true);
+    //   });
+    // },
+    changeEnd: async (data) => {
+      await TodoAPI.chageToDoEnd(data).then((res) => {
         setDropData(true);
       });
     },
@@ -133,7 +142,7 @@ const Todos = () => {
   const [dropData, setDropData] = useState<boolean>(false);
   useEffect(() => {
     todoAPI.getData();
-  }, [isOpen, dropData]);
+  }, [isOpen]);
 
   useEffect(() => {
     // console.log(dropData);
@@ -146,14 +155,30 @@ const Todos = () => {
     const items = [...list]; // 새배열담기
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
-    console.log(result.destination, "옮긴");
-    console.log(reorderedItem, "선택");
-    console.log(items, "옮긴배열");
+    console.log(result);
+    // console.log(reorderedItem, "선택");
     setList(items);
     setDropData(true);
-    todoAPI.changeData();
+    // console.log(items, "옮긴배열");
+
+    const data = {
+      dragStart: list[result.source.index].seq,
+      droppable: list[result.destination.index].seq,
+    };
+    todoAPI.changeEnd(data);
+    console.log(data);
   };
+  // const dddd = (e: any) => {
+  //   if (e.destination === null) return;
+  //   else {
+  //     const data = {
+  //       dragStart: list[e.source.index].seq,
+  //       droppable: list[e.destination.index].seq,
+  //     };
+  //     // todoAPI.changeData(data);
+  //     console.log("됨");
+  //   }
+  // };
 
   return (
     <>
@@ -161,17 +186,24 @@ const Todos = () => {
       <Box p={Media768() ? "20px 20px" : "20px 40px"} maxWidth={Media768() ? "" : "550px"} m={Media768() ? "" : "0 auto"}>
         <Box border=" 1px solid #d1d1d1" borderRadius="5px">
           <Container>
-            <DragDropContext onDragEnd={handleChange}>
+            <DragDropContext
+              onDragEnd={handleChange}
+              // onDragUpdate={(e) => {
+              //   dddd(e);
+              // }}
+            >
               <Droppable droppableId="list">
                 {(provided: any) => (
                   <ul className="list" {...provided.droppableProps} ref={provided.innerRef}>
-                    {list.map(({ _id, seq, content }, index) => (
+                    {list.map(({ _id, seq, content, title }, index) => (
                       <Draggable key={_id} draggableId={_id} index={index}>
                         {(provided: any) => (
                           <li ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps} key={_id}>
                             <List>
                               <Link to={`/todolist/${_id}`}>
-                                <p>{content}</p>
+                                <p>
+                                  {seq}...........{content}
+                                </p>
                               </Link>
                               <button
                                 onClick={() => {

@@ -1,4 +1,4 @@
-import { IComment, ITodoDeleteData, ITodos } from "../types/todo";
+import { IComment, ITodoDeleteData, ITodoPutData, ITodos } from "../types/todo";
 import API from "./../utiis/API";
 
 const TodoAPI = {
@@ -11,8 +11,11 @@ const TodoAPI = {
   getToDo: () => {
     return API.get(`/todos`);
   },
-  chageToDo: () => {
-    return API.post(`/todos/change`);
+  // chageToDo: (data: any) => {
+  //   return API.post(`/todos/change`, data);
+  // },
+  chageToDoEnd: (data: any) => {
+    return API.post(`/todos/end`, data);
   },
   deleteTodo: ({ seq }: ITodoDeleteData) => {
     return API.post(`/todos/remove`, { seq });
@@ -20,8 +23,8 @@ const TodoAPI = {
   detailTodo: (id: string | undefined) => {
     return API.get(`/todos/${id}`);
   },
-  updateTodo: (id: string | undefined, data: ITodos) => {
-    return API.post(`/todos/${id}`, data);
+  updateTodo: (id: string | undefined, { data }: ITodoPutData) => {
+    return API.put(`/todos/${id}`, data);
   },
 
   postTodo: (formData: any) => {
